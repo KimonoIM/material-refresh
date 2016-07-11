@@ -1,10 +1,10 @@
 /**
- * Google Material Design Swipe To Refresh.   
+ * Google Material Design Swipe To Refresh.
  * By Gctang(https://github.com/lightningtgc)
  *
  * Three types of refresh:
  * 1. Above or coplanar with another surface
- * 2. Below another surface in z-space. 
+ * 2. Below another surface in z-space.
  * 3. Button action refresh
  *
  */
@@ -40,7 +40,7 @@
     var onEnd = null;
     var onBtnEnd = null;
     var stopAnimatTimeout = null;
-    
+
     var refreshNav = '';
 
     var lastTime = new Date().getTime();
@@ -74,7 +74,7 @@
         y2: 0
     }
 
-    // Default options 
+    // Default options
     /* var opts = { */
     /*     scrollEl: '', //String  */
     /*     nav: '', //String */
@@ -87,14 +87,14 @@
     /*     onEnd: null //Function */
     /* } */
 
-    
-    /* Known issue: 
-     * 1. iOS feature when scrolling ,animation will stop  
+
+    /* Known issue:
+     * 1. iOS feature when scrolling ,animation will stop
      * 2. Animation display issue in anfroid like miui小米
      *
      *
      * TODO list:
-     * 1. Using translate and scale together to replace top 
+     * 1. Using translate and scale together to replace top
      * 2. Optimize circle rotate animation
      */
 
@@ -121,7 +121,7 @@
         $arrowWrapper = $('.mui-arrow-wrapper', $refreshMain);
         $arrowMain = $('.mui-arrow-main', $refreshMain);
 
-        // Custom nav bar 
+        // Custom nav bar
         if (!isDefaultType()) {
             $refreshMain.addClass('mui-refresh-nav');
             basePosY = $(refreshNav).height() + 20;
@@ -150,7 +150,7 @@
             $refreshMain.css('top', options.top);
         }
 
-        // Extract theme 
+        // Extract theme
         if (options.theme) {
             $refreshMain.addClass(options.theme);
         } else {
@@ -199,7 +199,7 @@
             if (!isDefaultType()) {
                 realTargetPos = realTargetPos + NUM_NAV_TARGET_ADDY;
             }
-            
+
             // Handle freeze
             $refreshMain.show();
             //Romove animat time
@@ -208,7 +208,7 @@
             $refreshMain.css('top', realTargetPos + 'px');
             // make it small
             $refreshMain.css('-webkit-transform', 'scale(' + 0.01  + ')');
-            
+
             setTimeout(doRotate, 60);
         }
     }
@@ -246,7 +246,7 @@
 
         // Fix jQuery touch event detect
         e = e.originalEvent || e;
-        
+
         if (e.touches[0]) {
             touchPos.x1 = e.touches[0].pageX;
             touchStartY = touchPos.y1 = e.touches[0].pageY;
@@ -273,10 +273,10 @@
         distanceY = touchPos.y2 - touchPos.y1;
 
         if (touchPos.y2 - touchStartY + verticalThreshold > 0) {
-            e.preventDefault();  
+            e.preventDefault();
 
             // Some android phone
-            // Throttle, aviod jitter 
+            // Throttle, aviod jitter
             if (now - lastTime < 90) {
                 return;
             }
@@ -301,8 +301,8 @@
         if (touchPos.top > 0 || isShowLoading) {
             return;
         }
-        e.preventDefault();
-        
+        // e.preventDefault();
+
         if (touchCurrentY > basePosY - customNavTop + NUM_POS_MIN_Y) {
             // Should move over the min position
             doRotate();
@@ -310,7 +310,7 @@
             backToStart();
         }
     }
-    
+
     /**
      * backToStart
      * Return to start position
@@ -355,7 +355,7 @@
         // Change the position
         $refreshMain.css('top', currMoveY + 'px');
         $arrowMain.css('-webkit-transform', 'rotate(' + -(y * 3) + 'deg)');
-        /* $arrowMain.css('transform', 'rotate(' + -(y * 3) + 'deg)'); */ 
+        /* $arrowMain.css('transform', 'rotate(' + -(y * 3) + 'deg)'); */
 
     }
 
@@ -378,7 +378,7 @@
         // Make sure display entirely
         $refreshMain.css('opacity', 1);
 
-        if (!isBtnAction) { 
+        if (!isBtnAction) {
             var realTargetPos = basePosY + NUM_POS_TARGET_Y - 20;
             if (!isDefaultType()) {
                 realTargetPos = realTargetPos + NUM_NAV_TARGET_ADDY;
@@ -401,13 +401,13 @@
 
     /**
      * Recover Refresh
-     * Hide the circle 
+     * Hide the circle
      */
     function recoverRefresh(){
         // For aviod resolve
         isStoping = true;
 
-        // Stop animation 
+        // Stop animation
         $refreshMain.addClass(noShowClass);
 
         $spinnerWrapper.hide();
@@ -415,7 +415,7 @@
         setTimeout(function(){
             $refreshMain.removeClass(noShowClass);
             $refreshMain.hide();
-            
+
             backToStart();
 
             $arrowWrapper.show();
@@ -428,9 +428,9 @@
             } else if (typeof onEnd === 'function') {
                 onEnd();
             }
-            
+
             isBtnAction = false;
-            
+
         }, 500);
     }
 
